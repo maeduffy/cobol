@@ -10,7 +10,8 @@
        01 C PIC S9(9).
        01 RESULT PIC X(9).
        01 SYM PIC A(3).
-       01 TESTING PIC S9(9) VALUE 2.
+       01 TESTING PIC S9(9) VALUE 1.
+       01 IF_FLAG PIC 9(1) VALUE 0.
 
        PROCEDURE DIVISION.
            MAIN. 
@@ -19,26 +20,37 @@
            END-IF.
 
            ACCEPT SYM
+
+           IF SYM = "if" THEN
+                MOVE 1 TO IF_FLAG
+                ACCEPT IN1
+
+                IF IN1 = "true" THEN
+                    MOVE "true" TO RESULT
+                ELSE IF IN1 = "false" THEN
+                    MOVE "false" TO RESULT
+                ELSE
+                    MOVE IN1 TO SYM
+                    GO TO PARSE
+                END-IF
+           ELSE
+                GO TO PARSE
+           END-IF.
+
+           CONDITIONAL_BRANCH.
            ACCEPT IN1
            ACCEPT IN2
 
-           IF IN1 = "true" THEN
-                MOVE 1 TO A
-           ELSE IF IN1 = "false" THEN
-                MOVE 0 TO A 
+           IF RESULT = "true" THEN
+               MOVE IN1 TO RESULT
+               GO TO FINISH
+           ELSE IF RESULT = "false" THEN
+               MOVE IN2 TO RESULT  
+               GO TO FINISH
            ELSE
-                MOVE IN1 TO A
+               DISPLAY "You can't do that!"
            END-IF.
-
-           IF IN2 = "true" THEN
-                MOVE 1 TO B
-           ELSE IF IN2 = "false" THEN
-                MOVE 0 TO B
-           ELSE
-                MOVE IN2 TO B
-           END-IF.
-
-           GO TO BINOP.
+           STOP RUN. 
            
            FINISH.
            DISPLAY RESULT.
@@ -72,8 +84,13 @@
            ELSE
                 DISPLAY "Fuck this shit."
            END-IF.
-           GO TO FINISH TEST1 TEST2 TEST3 TEST4 TEST5
-           TEST6 TEST7 DEPENDING TESTING.
+
+           IF IF_FLAG = 1 THEN
+               GO TO CONDITIONAL_BRANCH
+           ELSE
+               GO TO FINISH TEST1 TEST2 TEST3 TEST4 TEST5
+               TEST6 TEST7 DEPENDING TESTING
+           END-IF.
 
            TESTS.
            MOVE '+' TO SYM
@@ -140,4 +157,27 @@
            ELSE
               DISPLAY "Test 7 failed."
            END-IF.
+           STOP RUN.
+
+           PARSE.
+           ACCEPT IN1
+           ACCEPT IN2
+
+           IF IN1 = "true" THEN
+               MOVE 1 TO A
+           ELSE IF IN1 = "false" THEN
+               MOVE 0 TO A 
+           ELSE
+               MOVE IN1 TO A
+           END-IF.
+
+           IF IN2 = "true" THEN
+               MOVE 1 TO B
+           ELSE IF IN2 = "false" THEN
+               MOVE 0 TO B
+           ELSE
+               MOVE IN2 TO B
+           END-IF.
+
+           GO TO BINOP.
            STOP RUN.
