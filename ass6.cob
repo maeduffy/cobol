@@ -72,7 +72,7 @@
            ELSE
                 DISPLAY "Fuck this shit."
            END-IF.
-           GO TO FINISH TEST1 TEST2 DEPENDING TESTING.
+           GO TO FINISH TEST1 TEST2 TEST3 TEST4 DEPENDING TESTING.
 
            TESTS.
            MOVE '+' TO SYM
@@ -91,7 +91,26 @@
 
            TEST2.
            IF RESULT = 000000002 THEN
-               DISPLAY "All tests passed!"
+               MOVE '-' TO SYM
+               MOVE 4 TO TESTING
+               GO TO BINOP
            ELSE
                DISPLAY "Test 2 failed."
            END-IF.
+
+           TEST3.
+           IF RESULT = 000000002 THEN
+                MOVE '*' TO SYM
+                MOVE 5 TO TESTING
+                GO TO BINOP
+           ELSE
+                DISPLAY "Test 3 failed."
+           END-IF.
+
+           TEST4.
+           IF RESULT = 000000008 THEN
+                DISPLAY "All tests passed!"
+           ELSE
+               DISPLAY "Test 4 failed."
+           END-IF.
+
