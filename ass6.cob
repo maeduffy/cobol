@@ -10,9 +10,14 @@
        01 C PIC S9(9).
        01 RESULT PIC X(9).
        01 SYM PIC A(3).
+       01 TESTING PIC S9(9) VALUE 2.
 
        PROCEDURE DIVISION.
            MAIN. 
+           IF TESTING > 1 THEN
+                GO TO TESTS
+           END-IF.
+
            ACCEPT SYM
            ACCEPT IN1
            ACCEPT IN2
@@ -67,4 +72,26 @@
            ELSE
                 DISPLAY "Fuck this shit."
            END-IF.
-           GO TO FINISH.
+           GO TO FINISH TEST1 TEST2 DEPENDING TESTING.
+
+           TESTS.
+           MOVE '+' TO SYM
+           MOVE 4 TO A
+           MOVE 2 TO B
+           GO TO BINOP.
+           TEST1.
+           IF RESULT = 000000006 THEN
+                MOVE '/' TO SYM
+                MOVE 3 TO TESTING
+                GO TO BINOP
+           ELSE
+                DISPLAY "Test 1 failed."
+           END-IF.
+           STOP RUN.
+
+           TEST2.
+           IF RESULT = 000000002 THEN
+               DISPLAY "All tests passed!"
+           ELSE
+               DISPLAY "Test 2 failed."
+           END-IF.
