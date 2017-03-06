@@ -12,9 +12,10 @@
        01 SYM PIC A(3).
 
        PROCEDURE DIVISION.
-           ACCEPT SYM. 
-           ACCEPT IN1.
-           ACCEPT IN2.
+           MAIN. 
+           ACCEPT SYM
+           ACCEPT IN1
+           ACCEPT IN2
 
            IF IN1 = "true" THEN
                 MOVE 1 TO A
@@ -32,6 +33,13 @@
                 MOVE IN2 TO B
            END-IF.
 
+           GO TO BINOP.
+           
+           FINISH.
+           DISPLAY RESULT.
+           STOP RUN.
+
+           BINOP.
            IF SYM = '-' THEN
                 SUBTRACT B FROM A GIVING C
                 MOVE C TO RESULT
@@ -59,6 +67,4 @@
            ELSE
                 DISPLAY "Fuck this shit."
            END-IF.
-           
-           DISPLAY RESULT.
-           STOP RUN.
+           GO TO FINISH.
