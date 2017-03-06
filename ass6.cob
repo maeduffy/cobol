@@ -72,7 +72,8 @@
            ELSE
                 DISPLAY "Fuck this shit."
            END-IF.
-           GO TO FINISH TEST1 TEST2 TEST3 TEST4 DEPENDING TESTING.
+           GO TO FINISH TEST1 TEST2 TEST3 TEST4 TEST5
+           TEST6 TEST7 DEPENDING TESTING.
 
            TESTS.
            MOVE '+' TO SYM
@@ -87,7 +88,6 @@
            ELSE
                 DISPLAY "Test 1 failed."
            END-IF.
-           STOP RUN.
 
            TEST2.
            IF RESULT = 000000002 THEN
@@ -109,8 +109,35 @@
 
            TEST4.
            IF RESULT = 000000008 THEN
-                DISPLAY "All tests passed!"
+                MOVE 'eq?' TO SYM
+                MOVE 6 TO TESTING
+                GO TO BINOP
            ELSE
                DISPLAY "Test 4 failed."
            END-IF.
 
+           TEST5.
+           IF RESULT = "false" THEN
+                MOVE '<=' TO SYM
+                MOVE 7 TO TESTING
+                GO TO BINOP
+            ELSE
+                DISPLAY "Test 5 failed."
+            END-IF.
+
+           TEST6.
+           IF RESULT = "false" THEN
+               MOVE 2 TO A
+               MOVE 8 TO TESTING
+               GO TO BINOP
+           ELSE
+               DISPLAY "Test 6 failed."
+           END-IF.
+
+           TEST7.
+           IF RESULT = "true" THEN
+              DISPLAY "All tests passed!"
+           ELSE
+              DISPLAY "Test 7 failed."
+           END-IF.
+           STOP RUN.
